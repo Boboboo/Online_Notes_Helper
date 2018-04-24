@@ -1,19 +1,14 @@
-// load the things we need
 var mongoose = require('mongoose');
 var bcrypt   = require('bcrypt-nodejs');
+const Schema = mongoose.Schema;
+const ObjectId = Schema.ObjectId;
+
 
 // define the schema for our user model
 var userSchema = mongoose.Schema({
-
     local            : {
         email        : String,
         password     : String
-    },
-    twitter          : {
-        id           : String,
-        token        : String,
-        displayName  : String,
-        username     : String
     },
     google           : {
         id           : String,
@@ -21,7 +16,6 @@ var userSchema = mongoose.Schema({
         email        : String,
         name         : String
     }
-
 });
 
 // generating a hash

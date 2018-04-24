@@ -8,19 +8,19 @@ const morgan       = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser   = require('body-parser');
 const session      = require('express-session');
+const settings = require("./config/settings");
+const mongoConfig = settings.mongoConfig;
 const exphbs = require("express-handlebars");
 const Handlebars = require("handlebars");
 const statics = express.static(__dirname + '/public');
-require('./config/passport')(passport); // pass passport for configuration
+const configRoutes = require("./routes");
 
 const handlebarsInstance = exphbs.create({
     defaultLayout: "main",
-    // Specify helpers which are only registered on this instance.
     helpers: {
       asJSON: (obj, spacing) => {
         if (typeof spacing === "number")
           return new Handlebars.SafeString(JSON.stringify(obj, null, spacing));
-  
         return new Handlebars.SafeString(JSON.stringify(obj));
       }
     }
@@ -34,14 +34,14 @@ const rewriteUnsupportedBrowserMethods = (req, res, next) => {
       req.method = req.body._method;
       delete req.body._method;
     }
-  
     // let the next middleware run:
     next();
 };
-const configDB = require('./config/database.js');
 
-// configuration ===============================================================
-mongoose.connect(configDB.url); // connect to our database
+
+// configuration, connect to database ===============================================================
+mongoose.connect(mongoConfig.serverUrl+mongoConfig.database);
+require('./config/passport')(passport); 
 
 // set up our express application
 app.use(morgan('dev')); // log every request to the console
@@ -64,7 +64,8 @@ app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
 // routes ======================================================================
-require('./app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
+require('./routes/login_out.js')(app, passport); // load our routes and pass in our app and fully configured passport
+configRoutes(app);
 
 // launch ======================================================================
 app.listen(port);

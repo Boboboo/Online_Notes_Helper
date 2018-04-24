@@ -1,6 +1,8 @@
+// var mongoose = require('mongoose');
+// mongoose.Promise = require('bluebird');
+
 module.exports = function(app, passport) {
 // normal routes ===============================================================
-    // show the home page (will also have our login links)
     app.get('/', function(req, res) {
         res.render('index.handlebars');
     });
@@ -22,29 +24,27 @@ module.exports = function(app, passport) {
 // AUTHENTICATE (FIRST LOGIN) ==================================================
     // locally --------------------------------
         // LOGIN ===============================
-        // show the login form
         app.get('/login', function(req, res) {
             res.render('login.handlebars', { message: req.flash('loginMessage') });
         });
 
         // process the login form
         app.post('/login', passport.authenticate('local-login', {
-            successRedirect : '/profile', // redirect to the secure profile section
-            failureRedirect : '/login', // redirect back to the signup page if there is an error
+            successRedirect : '/profile',  
+            failureRedirect : '/login', 
             failureFlash : true // allow flash messages
         }));
 
         // SIGNUP =================================
-        // show the signup form
         app.get('/signup', function(req, res) {
             res.render('signup.handlebars', { message: req.flash('signupMessage') });
         });
 
         // process the signup form
         app.post('/signup', passport.authenticate('local-signup', {
-            successRedirect : '/profile', // redirect to the secure profile section
-            failureRedirect : '/signup', // redirect back to the signup page if there is an error
-            failureFlash : true // allow flash messages
+            successRedirect : '/profile', 
+            failureRedirect : '/signup', 
+            failureFlash : true 
         }));
 
     // google -------------------------------
@@ -65,9 +65,9 @@ module.exports = function(app, passport) {
             res.render('connect-local.handlebars', { message: req.flash('loginMessage') });
         });
         app.post('/connect/local', passport.authenticate('local-signup', {
-            successRedirect : '/profile', // redirect to the secure profile section
-            failureRedirect : '/connect/local', // redirect back to the signup page if there is an error
-            failureFlash : true // allow flash messages
+            successRedirect : '/profile', 
+            failureRedirect : '/connect/local', 
+            failureFlash : true 
         }));
 
     // google -------------------------------
