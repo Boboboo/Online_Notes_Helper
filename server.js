@@ -40,7 +40,7 @@ const rewriteUnsupportedBrowserMethods = (req, res, next) => {
 
 
 // configuration, connect to database ===============================================================
-mongoose.connect(mongoConfig.serverUrl+mongoConfig.database);
+mongoose.connect(mongoConfig.serverUrl+mongoConfig.database,{ useMongoClient: true });
 require('./config/passport')(passport); 
 
 // set up our express application

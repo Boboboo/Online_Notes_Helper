@@ -14,9 +14,15 @@ var userSchema = mongoose.Schema({
         id           : String,
         token        : String,
         email        : String,
-        name         : String
+        name         : String,
+        // notes        : [{
+        //     noteId       : ObjectId,
+        //     userId       : ObjectId,
+        //     note_content : String
+        // }]
     }
 });
+
 
 // generating a hash
 userSchema.methods.generateHash = function(password) {
