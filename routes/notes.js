@@ -41,8 +41,59 @@ router.get("/all", async (req,res)=>{
     }   
 });
 
+router.get("/:userId", async (req,res)=>{
+    try{
+        const theNotes=await notesData.getNotesByUserId(req.params.userId);
+        console.log(theNotes);
+        res.json(theNotes); 
+    }catch(e){
+        console.log(e);
+        
+    }   
+});
 
+router.get("/:userId/:noteId", async (req,res)=>{
+    try{
+        const theNote=await notesData.getTheNoteByNoteId(req.params.userId,req.params.noteId);
+        console.log(theNote);
+        res.json(theNote); 
+    }catch(e){
+        console.log(e);
+        
+    }   
+});
 
+router.put("/:userId/:noteId",async(req,res)=>{
+    let noteInfo=req.body;
+    try{
+        await notesData.getTheNoteByNoteId(req.params.userId,req.params.noteId);
+    }catch(e){
+        res.status(404).json({error: "Note not found."});
+    }
+    try{
+        const result=await notesData.updateNote(req.params.userId,req.params.noteId,noteInfo);
+        res.json(result);
+    }catch(e){
+        res.sendStatus(500);
+    }
+});
+
+router.delete("/:userId/:noteId",async(req,res)=>{
+    try {
+        await notesData.getTheNoteByNoteId(req.params.userId,req.params.noteId);
+        res.sendStatus(200);
+    } catch (e) {
+        console.log(e);
+        res.status(404).json({error:"The note not found."});
+    }
+
+    try {
+        await notesData.deleteNote(req.params.noteId);
+        res.sendStatus(200);
+    } catch (e) {
+        res.status(500);
+    }
+})
 
 
 module.exports=router;

@@ -13,15 +13,9 @@ async function addNote(userId,content){
         _id:new ObjectId(),
         user_id:theUser._id,
         note_content:content
-    }
- 
-    // let newNote={
-    //     $push:{notes:theNote}
-    // }
-    
+    }   
     const noteInfo=await notesCollection.insertOne(theNote);
     if(noteInfo.insertedCount==0) throw "Could not add note.";
-    // await usersCollection.updateOne({_id: ObjectId(userId)},newNote);
     return theNote;
 }
 
@@ -40,5 +34,57 @@ async function getAllNotes(){
     return notesList;
 }
 
+async function getNotesByUserId(userId){
+    const notesCollection=await notes();
+    const allNotes=await notesCollection.find({}).toArray();
+   
+    if(!allNotes) throw "User not found.";
+    let notesList=[];
+    for(let i=0;i<allNotes.length;i++){
+        if(allNotes[i].user_id==userId){
+            notesList.push(allNotes[i]);
+        }   
+    }
+    return notesList;
+}
 
-module.exports={addNote,getAllNotes};
+async function getTheNoteByNoteId(userId,noteId){
+    const notesList=await getNotesByUserId(userId);
+    if(notesList) {
+        for(let i=0;i<notesList.length;i++){
+            if(notesList[i]._id==noteId){
+                return notesList[i];
+            }
+        }
+    }  
+}
+
+async function updateNote(userId,noteId,suppliedChange){
+    const notesCollection=await notes();
+    const updatedNote={};
+    if(suppliedChange.note_content){
+        updatedNote.note_content=suppliedChange.note_content;
+    }
+    const updatedInfo=await notesCollection.updateOne(
+        {_id:ObjectId(noteId)},
+        {$set:updatedNote}
+    ); 
+    return await this.getTheNoteByNoteId(userId,noteId);
+}
+
+async function deleteNote(userId,noteId){
+    if(!userId) throw "No userId provided.";
+    if(!noteId) throw "No noteId provided.";
+    const notesCollection=await notes();
+    const theOne=await getTheNoteByNoteId(userId,noteId);
+
+    if(theOne._id===noteId){
+        const result=notesCollection.removeOne({_id:noteId});
+        if(deleteInfo.deleteCount==0) throw "Could not delete note.";
+    }
+   
+    return "{delete note: true}";
+}
+
+
+module.exports={addNote,getAllNotes,getNotesByUserId,getTheNoteByNoteId,updateNote,deleteNote};

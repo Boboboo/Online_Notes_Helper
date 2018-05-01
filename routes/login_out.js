@@ -4,7 +4,7 @@
 module.exports = function(app, passport) {
 // normal routes ===============================================================
     app.get('/', function(req, res) {
-        res.render('index.handlebars');
+        res.render('home.handlebars');
     });
 
     // PROFILE SECTION =========================
