@@ -2,16 +2,29 @@ const mongoColections=require("../config/mongoCollections");
 const notes=mongoColections.notes;
 const requiredUsers=mongoColections.users;
 const ObjectId=require('mongodb').ObjectId;
+// var mongoose = require('mongoose');
+// const User=mongoose.model('User', userSchema);
+// const Schema = mongoose.Schema;
 
 async function addNote(userId,content){
     const usersCollection=await requiredUsers();
     const theUser=await usersCollection.findOne({user_id:userId});
-    if(!theUser) throw "User not found.";
-    const notesCollection=await notes();
+    // const allUsers=await usersCollection.find({}).toArray();
+    // for(let i=0;i<allUsers.length;i++){
+    //     if(allUsers[i]._id==userId){
+    //         console.log(allUsers[i]._id);
+    //     }
 
+    // //    console.log(allUsers[i]._id);
+    // //    console.log(userId+"*******");
+    // }
+    // console.log(theUser);
+    if(!theUser) throw "User not found.";
+
+    const notesCollection=await notes();
     let theNote={
         _id:new ObjectId(),
-        user_id:theUser._id,
+        user_id:userId,
         note_content:content
     }   
     const noteInfo=await notesCollection.insertOne(theNote);

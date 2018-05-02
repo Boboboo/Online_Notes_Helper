@@ -1,0 +1,94 @@
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+<style>
+    body { 
+      padding-top:20px; 
+      word-wrap:break-word; 
+    }
+    .jumbotron{
+      padding:10px;
+    }
+    .noteGuide{
+      margin-bottom:25px;
+    }
+  
+    p,h4,h3{
+      color:#353C62;
+    }
+    .panel{ 
+      text-align: center; 
+    }
+    .name{
+      color:white;
+      background:#353C62;
+      margin-top:10px;
+      margin-bottom: 30px;
+    }
+    #addNoteDiv{
+      margin-top: 20px;
+      text-align: center;
+    }
+    #textContainer{
+      margin:25px;
+    }
+    .noteContainer{
+      margin-bottom: 80px;
+    }
+    .noteContent {
+    padding-left:1em;
+    padding-right:1em;
+    padding-top:1.5em;
+    border-radius: 5px;
+    border:1px solid #16544079;
+    background: white;
+    height: 7.5em;
+}
+  .noteContent p {
+      margin: 0;
+      line-height: 1.5em;
+  }
+</style>
+
+
+<body>
+
+{{>header}}
+
+<div class="jumbotron">
+      <div class="container-fluid noteGuide">
+        <div class="row">
+            <div class="col-sm-6">
+                  <h2><span class="glyphicon glyphicon-list-alt"></span><a class="title" href="/notes/all">&nbsp;&nbsp;All Notes</a></h2>
+            </div>
+            
+        </div>
+      </div>
+ </div>
+
+<div class="container noteContainer">
+   {{#each all}}
+        {{#if @first}}
+        <div id="addNoteDiv">
+            <a class="btn btn-primary addNote" href="/notes/addNote/{{this.user_id}}" role="button"><span class="glyphicon glyphicon-hand-right"></span>&nbsp;&nbsp;&nbsp;Add New Note</a>
+        </div>
+        {{/if}}
+   {{/each}} 
+
+    <div class="row" >
+        {{#each all}}
+              <div class="panel">
+                  <div class="noteContent">
+                    <p>{{this.note_content}}</p>
+                  </div>
+                
+                  <a class="btn btn-sm name" href="/notes/{{this.user_id}}/{{this._id}}" role="button"><span class="glyphicon glyphicon-pencil"></span> Update </a>
+                  <a class="btn btn-sm name" href="/notes/{{this._id}}" role="button"><span class="glyphicon glyphicon-remove"></span> Delete </a>  
+              </div>
+        {{/each}}    
+    </div> 
+</div>
+
+{{>footer}}
+
+</body>
+ <script src="/public/js/addNote.js"></script> 

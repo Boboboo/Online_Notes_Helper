@@ -6,7 +6,7 @@ html{
 /*Background Image*/
 body{
     font-family: 'Quicksand', sans-serif;
-    background: url("background.jpg") no-repeat center center;
+    background: url("background.jpg") no-repeat center center; 
     background-attachment: fixed;
     background-size: cover;
 }
@@ -52,7 +52,7 @@ body{
     position: absolute;
     bottom: 0;
     text-align: center;
-    width: 100%;                  /*写了center不居中，要写width使footer占100%就居中了*/
+    width: 100%;                  
 }
 
 /*Navigation bar*/

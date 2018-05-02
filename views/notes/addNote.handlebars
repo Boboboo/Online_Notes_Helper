@@ -1,0 +1,75 @@
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+<style>
+    body { 
+      padding-top:20px; 
+      word-wrap:break-word; 
+    }
+    .jumbotron{
+      padding:10px;
+      text-align: center;
+    }
+    .noteGuide{
+      margin-bottom:25px;
+    }
+    p,h4,h3{
+      color:#353C62;
+    }
+    #notePad{
+      text-align: center;
+    }
+    .buttons{
+      margin-top: 20px;
+      text-align: center;
+    }
+    .butt{
+      background: #353C62;
+      color:white;
+      outline: none;
+    }
+    .butt:hover{
+      background:#3A6395;
+      color:white;
+      outline: none;
+    }
+
+    #textContainer{
+      margin:25px;
+    }
+</style>
+
+
+<body>
+
+{{>header}}
+
+<div class="jumbotron">
+      <div class="container-fluid noteGuide">
+        <div class="row">
+            <div class="col-sm-12">
+                <h2><span class="glyphicon glyphicon-plus-sign"></span><a>&nbsp;&nbsp;Add Your Note</a></h2>
+            </div>
+        </div>
+      </div>
+ </div>
+
+<form>
+    <div id="textContainer">
+      <textarea class="form-control" rows="12"  name="noteContent" form="noteForm" placeholder="Enter your note here..."></textarea>
+      <p class="text"></p>
+      <p class="text1"></p>
+    </div>
+
+    <p id="userId" hidden>{{userId}}</p>
+
+    <div class="buttons">
+          <button type="submit" class="btn butt">Submit</button>
+           <a href="/notes/{{userId}}" class="btn btn-info">Return</a>
+    </div> 
+</form>
+
+
+{{>footer}}
+
+</body>
+ <script src="/public/js/addNote.js"></script> 

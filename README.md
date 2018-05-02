@@ -1,4 +1,4 @@
-## Family Locator
+## Online Notes Helper
 
  1. Users will be able to signup/login, in both local and google auth ways.
  2. Users can manage their reading notes online, which means user can add notes, update notes, and also delete notes .

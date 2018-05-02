@@ -7,6 +7,20 @@ router.get("/", async (req,res)=>{
     res.status(200).send("Note root");
 });
 
+router.get("/addNote/:id",async (req,res)=>{
+    try{
+        if(req.user) res.render('../views/notes/addNote',{
+            user:req.user,
+            userId:req.params.id
+        });  
+        else res.redirect('/login');        
+    }catch(e){
+        console.log(e);
+        res.redirect('/');
+    } 
+});
+
+
 router.post("/:userId",async(req,res)=>{
     let noteInfo=req.body;
     if (!noteInfo) {
@@ -21,6 +35,7 @@ router.post("/:userId",async(req,res)=>{
         res.status(400).json({error:"You must provide a note content"});
         return;  
     }
+    req.params.userId=noteInfo.userId;
     try{
         const newNote=await notesData.addNote(noteInfo.userId,noteInfo.note_content);
         res.json(newNote);
@@ -30,27 +45,20 @@ router.post("/:userId",async(req,res)=>{
     }
 });
 
-router.get("/all", async (req,res)=>{
+router.get("/:userId", async (req,res)=>{
     try{
-        const all=await notesData.getAllNotes();
-        console.log(all);
-        res.json(all); 
+        const all=await notesData.getNotesByUserId(req.params.userId);
+        res.render('../views/notes/allNotes',{
+            all:all
+        });
+       
     }catch(e){
         console.log(e);
+        res.redirect('/');
         
     }   
 });
 
-router.get("/:userId", async (req,res)=>{
-    try{
-        const theNotes=await notesData.getNotesByUserId(req.params.userId);
-        console.log(theNotes);
-        res.json(theNotes); 
-    }catch(e){
-        console.log(e);
-        
-    }   
-});
 
 router.get("/:userId/:noteId", async (req,res)=>{
     try{
