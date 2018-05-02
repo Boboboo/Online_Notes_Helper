@@ -18,6 +18,16 @@ router.get("/all", async (req,res)=>{
     }   
 });
 
+router.get("/:userId", async (req,res)=>{
+    try{
+        const theUser=await usersData.getTheUser(req.params.userId);
+        //console.log(theUser);
+        res.json(theUser); 
+    }catch(e){
+        console.log(e);    
+    }    
+});
+
 
 router.post("/",async(req,res)=>{
     let userInfo=req.body;

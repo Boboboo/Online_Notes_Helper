@@ -20,6 +20,15 @@ async function getAllUsers(){
     return usersList; 
 }
 
+async function getTheUser(userId){
+    if(!userId)  throw "No userId provided.";
+    const usersCollection=await users();
+    const theUser=await usersCollection.findOne({_id:ObjectId(userId)});
+    if(theUser){
+        return theUser;
+    }   
+}
+
 async function addUser(id,name,email){
     const usersCollection=await users();
     let newUser={
@@ -32,4 +41,4 @@ async function addUser(id,name,email){
     return newUser;
 }
 
-module.exports={getAllUsers,addUser};
+module.exports={getAllUsers,getTheUser,addUser};

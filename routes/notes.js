@@ -22,6 +22,7 @@ router.get("/addNote/:id",async (req,res)=>{
 
 
 router.post("/:userId",async(req,res)=>{
+   
     let noteInfo=req.body;
     if (!noteInfo) {
         res.status(400).json({ error: "You must provide data to create a note." });
@@ -35,9 +36,9 @@ router.post("/:userId",async(req,res)=>{
         res.status(400).json({error:"You must provide a note content"});
         return;  
     }
-    req.params.userId=noteInfo.userId;
+    
     try{
-        const newNote=await notesData.addNote(noteInfo.userId,noteInfo.note_content);
+        const newNote=await notesData.addNote(req.params.userId,noteInfo.note_content);
         res.json(newNote);
     }catch(e){
         console.log(e);
