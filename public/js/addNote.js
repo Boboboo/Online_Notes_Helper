@@ -14,8 +14,7 @@ $(document).ready(function() {
             url         : userIdData,        //  post route url
             data        : formData, 
             success: function(data) {
-              $('.text').text("You have submitted note below successfully:");
-              $('.text1').text(JSON.stringify(data.note_content));
+              $('.text').text("You have submitted note above successfully.");
             },
             dataType    : 'json',
             encode      : true

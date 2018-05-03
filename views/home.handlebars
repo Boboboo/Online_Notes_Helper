@@ -18,6 +18,16 @@
         background:#3A68B4;
         color:#F8FFBF;
     }
+    .jumbotron{
+        background-attachment: fixed;
+        background-size: cover;
+        background: url("../../public/image/background.jpg") no-repeat center center; 
+        text-align: center;
+        letter-spacing: 1px;
+        padding: 30px;
+        margin-top:50px; 
+        height:400px;
+    }
 </style>
 
 
@@ -27,9 +37,10 @@
 
     <div class="jumbotron" id="myContainer">
         <h1>Online Notes Helper</h1>
-        <h3>Fleeting memories and writing notes</h3>
         </br>
-        <a href="/signup" class="btn btn-default btn-lg"><span class="fa fa-user"></span> Sign up for free</a>
+        <h2>Fleeting memories and writing notes</h2>
+        </br>
+        <a href="/signup" class="btn btn-default btn-lg"><span class="fa fa-user"></span> Create Your Account</a>
     </div> 
 
     {{>footer}} 
